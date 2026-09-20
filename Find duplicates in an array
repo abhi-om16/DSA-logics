@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int main() 
+{
+    int n,count = 0;
+    int i,j;
+    cout << "Enter elements of array: ";
+    cin >> n;
+    vector<int> a(n);
+    for(int i=0;i<n;i++){
+        cin >> a[i];
+    }
+    for(i=0;i<n;i++){
+        int fix = a[i];
+        for(j=i+1;j<n;j++){
+            if(fix == a[j]){
+                count += 1;
+            }
+        }
+    }
+    if(count >= 1){
+        cout << "True";
+    }
+    else{
+        cout << "False";
+    }
+    return 0;
+}
