@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int secondLargestElement(vector<int>& nums) {
+        int n = nums.size();
+        
+        // 1. Fixed: Initialize smax to INT_MIN, not INT_MAX
+        int max = INT_MIN;
+        int smax = INT_MIN; 
+        
+        if (n < 2) {
+            return -1;
+        }
+        
+        // 2. Fixed: Changed the comma (,) to a semicolon (;) in the loop condition
+        for (int i = 0; i < n; i++) { 
+            if (nums[i] > max) {
+                smax = max;
+                max = nums[i];
+            }
+            else if (nums[i] > smax && nums[i] != max) {
+                smax = nums[i];
+            }
+        }
+        
+        // 3. Fixed: Changed undefined 'secondLargest' variable to 'smax'
+        if (smax == INT_MIN) { 
+            return -1;
+        }
+        
+        return smax; 
+    }
+};
