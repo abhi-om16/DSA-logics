@@ -1,0 +1,27 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int main() 
+{
+    int n;
+    cout << "Enter number: ";
+    cin >> n;
+    if(n == 0){
+        cout << "Digits are : 0";
+        return 0;
+    }
+    vector<int> digits;
+    while(n > 0){
+        int rem = n % 10;
+        digits.push_back(rem);
+        n /= 10;
+    }
+    reverse(digits.begin(),digits.end());
+     cout << "Digits: ";
+    for (int digit : digits) {
+        cout << digit << " ";
+    }
+    cout << endl;
+    return 0;
+}
