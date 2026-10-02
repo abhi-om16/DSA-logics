@@ -1,0 +1,14 @@
+#include <string>
+
+class Solution {
+public:
+    bool checkIfPangram(std::string sentence) {
+        for(char letter 'a'; letter <= 'z';letter++){
+            if(sentence.find(letter) == string::npos){
+                return false;
+            }
+
+        }
+        return true;
+    }
+};
