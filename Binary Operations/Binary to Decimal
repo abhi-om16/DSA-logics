@@ -1,0 +1,15 @@
+class Solution {
+  public:
+    int binaryToDecimal(string& b) {
+        // code here
+        int n = std::stoi(b);
+        int ans=0,rem=0,pow=1;
+        while(n > 0){
+            rem = n % 10;
+            ans += pow*rem;
+            n /= 10;
+            pow *= 2;
+        }
+        return ans;
+    }
+};
