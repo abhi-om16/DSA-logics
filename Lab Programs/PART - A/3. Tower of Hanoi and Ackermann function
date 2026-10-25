@@ -1,0 +1,78 @@
+#include <stdio.h>
+
+/* Global variable to count disk movements */
+int moves = 0;
+
+/* Tower of Hanoi */
+void hanoi(int n, char from, char to, char aux)
+{
+    if (n == 0)
+        return;
+
+    hanoi(n - 1, from, aux, to);
+
+    printf("Move disk %d: %c -> %c\n", n, from, to);
+    moves++;
+
+    hanoi(n - 1, aux, to, from);
+}
+
+/* Ackermann Function */
+int ackermann(int m, int n)
+{
+    if (m == 0)
+        return n + 1;
+
+    if (n == 0)
+        return ackermann(m - 1, 1);
+
+    return ackermann(m - 1, ackermann(m, n - 1));
+}
+
+int main()
+{
+    int choice, n, m, result;
+
+    while (1)
+    {
+        printf("\n===== MENU =====\n");
+        printf("1. Tower of Hanoi\n");
+        printf("2. Ackermann Function\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1:
+                printf("Enter number of disks: ");
+                scanf("%d", &n);
+
+                moves = 0;
+
+                printf("\nDisk movements:\n");
+                hanoi(n, 'A', 'C', 'B');
+
+                printf("Total number of disk moves = %d\n", moves);
+                break;
+
+            case 2:
+                printf("Enter m and n: ");
+                scanf("%d %d", &m, &n);
+
+                result = ackermann(m, n);
+
+                printf("Ackermann(%d, %d) = %d\n", m, n, result);
+                break;
+
+            case 3:
+                printf("Program terminated.\n");
+                return 0;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+
+    return 0;
+}
