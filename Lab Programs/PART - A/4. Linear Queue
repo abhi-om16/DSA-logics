@@ -1,0 +1,64 @@
+#include <stdio.h>
+#define MAX 5
+int queque[MAX];
+int front=-1,rear=-1;
+
+void enqueque(int x) {
+    if(rear == MAX - 1){
+        printf("Queque overflow\n");
+        return; // Fixed: Added return to stop insertion when full
+    }
+    if(front == -1){
+        front = 0;
+    }
+    queque[++rear] = x;
+    printf("%d is inserted\n",x);
+}
+
+int dequeque() { // Fixed: Changed return type from void to int
+    if(front == -1 || front > rear){
+        printf("Queque underflow\n");
+        return -1;
+    }
+    return queque[front++];
+}
+
+void display() {
+    int i;
+    if(front == -1 || front > rear){
+        printf("Queque is empty\n");
+        return;
+    }
+    printf("Queque elements: ");
+    for(i = front;i<=rear;i++){
+        printf("%d ",queque[i]); // Fixed: Removed stray double quote
+    }
+    printf("\n");
+}
+
+int main(){
+    int choice,x;
+    while(1){
+        printf("\n1.Insert an element\n2.Delete an element\n3.Display queque\n4.Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:
+                printf("Enter element: ");
+                scanf("%d",&x);
+                enqueque(x);
+                break;
+            case 2:
+                x = dequeque();
+                if(x != -1){
+                    printf("\nDeleted element is %d\n",x);
+                }
+                break; // Fixed: Moved break outside the if-statement
+            case 3:
+                display();
+                break;
+            case 4:
+                return 0;
+        }
+    }
+}
