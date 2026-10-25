@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int *queue, size, front = -1, rear = -1;
+    int choice, item, i;
+
+    printf("Enter size of queue: ");
+    scanf("%d", &size);
+
+    if (size <= 0) {
+        printf("Invalid size\n");
+        return 0;
+    }
+
+    queue = (int *)malloc(size * sizeof(int));
+    if (queue == NULL) {
+        printf("Memory Allocation failed\n");
+        return 0;
+    }
+
+    while (1) {
+        printf("\n1.Enqueue\n2.Dequeue\n3.Display\n4.Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                if ((rear + 1) % size == front) {
+                    printf("Queue overflow\n");
+                } else {
+                    printf("Enter item to insert: ");
+                    scanf("%d", &item);
+                    if (front == -1) {
+                        front = 0;
+                    }
+                    rear = (rear + 1) % size;
+                    queue[rear] = item; // Bug Fix 1: Assignment moved outside the else block
+                }
+                break;
+
+            case 2:
+                if (front == -1) {
+                    printf("Queue underflow\n");
+                } else {
+                    printf("Deleted item is %d\n", queue[front]);
+                    if (front == rear) {
+                        front = rear = -1;
+                    } else {
+                        front = (front + 1) % size;
+                    }
+                }
+                break;
+
+            case 3:
+                if (front == -1) {
+                    printf("Queue is empty\n");
+                } else {
+                    printf("Queue elements: ");
+                    i = front;
+                    while (1) {
+                        printf("%d ", queue[i]);
+                        if (i == rear) { // Bug Fix 2: Changed assignment '=' to comparison '=='
+                            break;
+                        }
+                        i = (i + 1) % size;
+                    }
+                    printf("\n");
+                }
+                break; // Bug Fix 3: Moved inside the closing brace of case 3
+
+            case 4:
+                free(queue);
+                return 0;
+
+            default:
+                printf("Invalid choice\n");
+                break;
+        }
+    }
+    return 0;
+}
