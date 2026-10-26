@@ -1,0 +1,135 @@
+#include <stdio.h>
+#define MAX 5
+
+// Stack 1 variables
+int stack1[MAX];
+int top1 = -1;
+
+// Stack 2 variables
+int stack2[MAX];
+int top2 = -1;
+
+void push() {
+    int st_num;
+    printf("Enter Stack Number (1 or 2): ");
+    scanf("%d", &st_num);
+
+    if (st_num == 1) {
+        if (top1 >= MAX - 1) {
+            printf("Stack Overflow! Stack 1 is full.\n");
+        } else {
+            int item;
+            printf("Enter item to insert into Stack 1: ");
+            scanf("%d", &item);
+            top1++;
+            stack1[top1] = item;
+            printf("Pushed to Stack 1\n");
+        }
+    } 
+    else if (st_num == 2) {
+        if (top2 >= MAX - 1) {
+            printf("Stack Overflow! Stack 2 is full.\n");
+        } else {
+            int item;
+            printf("Enter item to insert into Stack 2: ");
+            scanf("%d", &item);
+            top2++;
+            stack2[top2] = item;
+            printf("Pushed to Stack 2\n");
+        }
+    } 
+    else {
+        printf("Invalid Stack Number\n");
+    }
+}
+
+void pop() {
+    int st_num;
+    printf("Enter Stack Number (1 or 2): ");
+    scanf("%d", &st_num);
+
+    if (st_num == 1) {
+        if (top1 == -1) {
+            printf("Stack Underflow! Stack 1 is empty.\n");
+        } else {
+            printf("Item deleted from Stack 1 is %d\n", stack1[top1]);
+            top1--;
+        }
+    } 
+    else if (st_num == 2) {
+        if (top2 == -1) {
+            printf("Stack Underflow! Stack 2 is empty.\n");
+        } else {
+            printf("Item deleted from Stack 2 is %d\n", stack2[top2]);
+            top2--;
+        }
+    } 
+    else {
+        printf("Invalid Stack Number\n");
+    }
+}
+
+void display() {
+    int st_num;
+    printf("Enter Stack Number (1 or 2): ");
+    scanf("%d", &st_num);
+
+    if (st_num == 1) {
+        if (top1 == -1) {
+            printf("Stack 1 is Empty\n");
+        } else {
+            printf("Status of Stack 1: ");
+            for (int i = top1; i >= 0; i--) {
+                printf("%d\t", stack1[i]);
+            }
+            printf("\n");
+        }
+    } 
+    else if (st_num == 2) {
+        if (top2 == -1) {
+            printf("Stack 2 is Empty\n");
+        } else {
+            printf("Status of Stack 2: ");
+            for (int i = top2; i >= 0; i--) {
+                printf("%d\t", stack2[i]);
+            }
+            printf("\n");
+        }
+    } 
+    else {
+        printf("Invalid Stack Number\n");
+    }
+}
+
+int main() {
+    int choice;
+
+    while (1) {
+        printf("\n--- MULTIPLE STACKS MENU ---\n");
+        printf("1. Push\n2. Pop\n3. Display\n4. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                push();
+                break;
+
+            case 2:
+                pop();
+                break;
+
+            case 3:
+                display();
+                break;
+
+            case 4:
+                printf("Exiting...\n");
+                return 0;
+
+            default:
+                printf("Invalid Choice\n");
+                break;
+        }
+    }
+}
