@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Patient { char name[20]; int priority; } queue[20];
+int count = 0;
+
+void insert() {
+    printf("Enter name and priority (1-5): ");
+    scanf("%s %d", queue[count].name, &queue[count].priority);
+    count++;
+}
+
+void delete_highest() {
+    if (count == 0) { printf("No patients!\n"); return; }
+    int highest_idx = 0;
+    for (int i = 1; i < count; i++) {
+        if (queue[i].priority > queue[highest_idx].priority) highest_idx = i;
+    }
+    printf(">> Treating: %s\n", queue[highest_idx].name);
+    for (int i = highest_idx; i < count - 1; i++) queue[i] = queue[i + 1];
+    count--;
+}
+
+void display() {
+    if (count == 0) { printf("Queue empty.\n"); return; }
+    for (int i = 0; i < count; i++) 
+        printf("%s (P:%d) -> ", queue[i].name, queue[i].priority);
+    printf("END\n");
+}
+
+int main() {
+    int choice;
+    while (1) {
+        printf("\n1. Insert  2. Treat  3. Display  4. Exit\nChoice: ");
+        scanf("%d", &choice);
+        if (choice == 1) insert();
+        else if (choice == 2) delete_highest();
+        else if (choice == 3) display();
+        else break;
+    }
+    return 0;
+}
