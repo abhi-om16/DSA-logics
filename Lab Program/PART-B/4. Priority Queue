@@ -1,71 +1,62 @@
 #include <stdio.h>
-#include <string.h>
+
+#define MAX 5
 
 struct Patient {
     char name[20];
-    int priority;
-} queue[20];
+    int priority; // Higher number = Higher priority
+} queue[MAX];
 
 int count = 0;
 
 void insert() {
-    printf("Enter name and priority (1-5): ");
-    scanf("%s %d", queue[count].name, &queue[count].priority);
-    count++;
+    if (count < MAX) {
+        printf("Enter name and priority: ");
+        scanf("%s %d", queue[count].name, &queue[count].priority);
+        count++;
+    } else {
+        printf("Ward Full!\n");
+    }
 }
 
-void delete_highest() {
+void treat_patient() {
     if (count == 0) {
         printf("No patients!\n");
         return;
     }
 
-    int highest_idx = 0;
+    // Find the patient with the highest priority
+    int highest = 0;
     for (int i = 1; i < count; i++) {
-        if (queue[i].priority > queue[highest_idx].priority) {
-            highest_idx = i;
-        }
+        if (queue[i].priority > queue[highest].priority)
+            highest = i;
     }
 
-    printf(">> Treating: %s\n", queue[highest_idx].name);
+    printf(">> Treating: %s (P:%d)\n", queue[highest].name, queue[highest].priority);
 
-    for (int i = highest_idx; i < count - 1; i++) {
-        queue[i] = queue[i + 1];
-    }
-    
+    // Fast-delete: Move the last patient into the treated patient's slot
+    queue[highest] = queue[count - 1];
     count--;
 }
 
 void display() {
-    if (count == 0) {
-        printf("Queue empty.\n");
-        return;
-    }
-
+    if (count == 0) printf("Queue Empty.\n");
     for (int i = 0; i < count; i++) {
-        printf("%s (P:%d) -> ", queue[i].name, queue[i].priority);
+        printf("%s(P:%d) ", queue[i].name, queue[i].priority);
     }
-    
-    printf("END\n");
+    printf("\n");
 }
 
 int main() {
     int choice;
-
     while (1) {
-        printf("\n1. Insert 2. Treat 3. Display 4. Exit\nChoice: ");
+        printf("\n1.Insert 2.Treat 3.Display 4.Exit\nChoice: ");
         scanf("%d", &choice);
-
-        if (choice == 1) {
-            insert();
-        } else if (choice == 2) {
-            delete_highest();
-        } else if (choice == 3) {
-            display();
-        } else {
-            break;
-        }
+        
+        if (choice == 1) insert();
+        else if (choice == 2) treat_patient();
+        else if (choice == 3) display();
+        else break;
     }
-
     return 0;
 }
