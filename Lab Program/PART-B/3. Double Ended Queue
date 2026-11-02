@@ -1,0 +1,71 @@
+#include <stdio.h>
+#define MAX 5
+int q[MAX], front=-1, rear=-1;
+
+void insertF(int x){
+    if((rear+1)%MAX==front) printf("Overflow\n");
+    else{
+        if(front==-1) front=rear=0;
+        else front=(front-1+MAX)%MAX;
+        q[front]=x;
+    }
+}
+
+void insertR(int x){
+    if((rear+1)%MAX==front) printf("Overflow\n");
+    else{
+        if(front==-1) front=rear=0;
+        else rear=(rear+1)%MAX;
+        q[rear]=x;
+    }
+}
+
+void deleteF(){
+    if(front==-1) printf("Underflow\n");
+    else{
+        printf("Deleted %d\n",q[front]);
+        if(front==rear) front=rear=-1;
+        else front=(front+1)%MAX;
+    }
+}
+
+void deleteR(){
+    if(front==-1) printf("Underflow\n");
+    else{
+        printf("Deleted %d\n",q[rear]);
+        if(front==rear) front=rear=-1;
+        else rear=(rear-1+MAX)%MAX;
+    }
+}
+
+void display(){
+    int i;
+    if(front==-1) printf("Queue empty\n");
+    else{
+        i=front;
+        while(1){
+            printf("%d ",q[i]);
+            if(i==rear) break;
+            i=(i+1)%MAX;
+        }
+    }
+}
+
+int main(){
+    int ch,x;
+    while(1){
+        printf("\n1.Insert Front 2.Delete Front");
+        printf("\n3.Insert Rear 4.Delete Rear");
+        printf("\n5.Display 6.Exit\n");
+        scanf("%d",&ch);
+        switch(ch){
+            case 1: scanf("%d",&x); insertF(x); break;
+            case 2: deleteF(); break;
+            case 3: scanf("%d",&x); insertR(x); break;
+            case 4: deleteR(); break;
+            case 5: display(); break;
+            case 6: return 0;
+            default: printf("Invalid choice\n");
+        }
+    }
+}
