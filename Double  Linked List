@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *prev, *next;
+};
+
+int main() {
+    struct Node *head = NULL, *temp = NULL, *newNode;
+    int n, i;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+
+    for (i = 0; i < n; i++) {
+        newNode = malloc(sizeof(struct Node));
+        printf("Enter data for node %d: ", i + 1);
+        scanf("%d", &newNode->data);
+        newNode->prev = newNode->next = NULL;
+
+        if (head == NULL) {
+            head = temp = newNode;
+        } else {
+            temp->next = newNode;   // Forward link
+            newNode->prev = temp;   // Backward link
+            temp = newNode;         // Move temp to the last node
+        }
+    }
+
+    // Forward traversal
+    printf("\nForward:  ");
+    temp = head;
+    while (temp != NULL) {
+        printf("%d <-> ", temp->data);
+        if (temp->next == NULL) break; // Keep temp at last node for reverse print
+        temp = temp->next;
+    }
+    printf("NULL\n");
+
+    // Backward traversal (starting from the last node)
+    printf("Backward: ");
+    while (temp != NULL) {
+        printf("%d <-> ", temp->data);
+        temp = temp->prev;
+    }
+    printf("NULL\n");
+
+    return 0;
+}
